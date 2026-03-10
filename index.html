@@ -980,16 +980,103 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
 }
 .size-btn.active,
 .size-btn:hover { background: var(--soil); color: var(--warm-white); border-color: var(--soil); }
+
+/* Order type toggle */
+.order-type-toggle {
+  display: flex; gap: 0;
+  border: 1.5px solid rgba(44,26,14,0.18);
+  border-radius: 6px; overflow: hidden;
+  width: fit-content;
+}
+.order-type-btn {
+  font-family: var(--font-ui);
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 10px 18px; cursor: pointer;
+  background: transparent; border: none;
+  color: var(--terra); transition: all 0.2s;
+  white-space: nowrap;
+}
+.order-type-btn.active {
+  background: var(--soil); color: var(--warm-white);
+}
+.order-type-btn .save-badge-inline {
+  display: inline-block;
+  background: var(--rose); color: #fff;
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 5px; border-radius: 3px;
+  margin-left: 5px; vertical-align: middle;
+}
+.order-type-btn.active .save-badge-inline {
+  background: rgba(255,255,255,0.25); color: #fff;
+}
+
+/* Subscription frequency */
+.sub-options {
+  display: none;
+  flex-direction: column; gap: 8px;
+  padding: 12px 14px;
+  background: rgba(74,99,53,0.05);
+  border: 1px solid rgba(74,99,53,0.2);
+  border-radius: 6px;
+}
+.sub-options.visible { display: flex; }
+.sub-options-label {
+  font-family: var(--font-ui);
+  font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 4px;
+}
+.sub-freq-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.sub-freq-btn {
+  font-family: var(--font-ui);
+  font-size: 0.65rem; font-weight: 600;
+  padding: 8px 14px; border-radius: 4px; cursor: pointer;
+  background: transparent;
+  border: 1.5px solid rgba(74,99,53,0.25);
+  color: var(--earth); transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.sub-freq-btn .freq-discount {
+  font-size: 0.5rem; color: var(--rose-deep); font-weight: 700;
+}
+.sub-freq-btn.active {
+  background: var(--sage); color: var(--warm-white);
+  border-color: var(--sage);
+}
+.sub-freq-btn.active .freq-discount { color: rgba(255,255,255,0.8); }
+.sub-note {
+  font-family: var(--font-ui);
+  font-size: 0.57rem; color: var(--terra); opacity: 0.75;
+  line-height: 1.5; margin-top: 2px;
+}
+
+/* Price display */
 .price-display {
   font-family: var(--font-display);
   font-size: 1.6rem; font-weight: 500;
   color: var(--sage);
   display: flex; align-items: baseline; gap: 10px;
 }
+.price-original {
+  font-size: 1.1rem; font-weight: 400;
+  color: var(--terra); opacity: 0.5;
+  text-decoration: line-through;
+}
 .price-offer {
   font-size: 1.6rem; font-weight: 500;
   color: var(--sage);
 }
+.price-save {
+  font-family: var(--font-ui);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--warm-white);
+  background: var(--rose);
+  padding: 3px 8px; border-radius: 3px;
+}
+
 .qty-selector {
   display: flex; align-items: center; gap: 0;
   border: 1.5px solid rgba(44,26,14,0.18); border-radius: 4px;
@@ -1041,9 +1128,10 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
 }
 .order-total-note {
   font-family: var(--font-ui);
-  font-size: 0.58rem; color: var(--terra);
+  font-size: 0.55rem; color: var(--terra);
   opacity: 0.7; margin-left: auto;
-  font-style: italic;
+  font-style: italic; text-align: right;
+  max-width: 200px; line-height: 1.4;
 }
 .price-unit {
   font-family: var(--font-ui);
@@ -2311,6 +2399,48 @@ footer {
         <!-- Size + Qty + Total + Order -->
         <div style="display:flex; flex-direction:column; gap:16px;">
 
+          <!-- Order type toggle -->
+          <div>
+            <div class="order-type-toggle">
+              <button class="order-type-btn active" id="btn-onetime" onclick="setOrderType('onetime')">One-time</button>
+              <button class="order-type-btn" id="btn-subscribe" onclick="setOrderType('subscribe')">Subscribe &amp; Save <span class="save-badge-inline">UP TO 15% OFF</span></button>
+            </div>
+          </div>
+
+          <!-- Subscription options (hidden until subscribe selected) -->
+          <div class="sub-options" id="sub-options">
+            <div class="sub-options-label">Delivery Frequency</div>
+            <div class="sub-freq-row">
+              <button class="sub-freq-btn active" id="freq-monthly" onclick="setFreq(this,'monthly')">
+                Monthly<span class="freq-discount">Best deal</span>
+              </button>
+              <button class="sub-freq-btn" id="freq-bimonthly" onclick="setFreq(this,'bimonthly')">
+                Every 2 Months<span class="freq-discount">Good deal</span>
+              </button>
+              <button class="sub-freq-btn" id="freq-quarterly" onclick="setFreq(this,'quarterly')">
+                Quarterly<span class="freq-discount">Entry deal</span>
+              </button>
+            </div>
+
+            <div class="sub-options-label" style="margin-top:10px">Subscription Duration</div>
+            <div class="sub-freq-row" id="sub-dur-row">
+              <button class="sub-freq-btn active" id="dur-3" onclick="setDur(this,3)">
+                3 Months<span class="freq-discount">–</span>
+              </button>
+              <button class="sub-freq-btn" id="dur-6" onclick="setDur(this,6)">
+                6 Months<span class="freq-discount">–</span>
+              </button>
+              <button class="sub-freq-btn" id="dur-9" onclick="setDur(this,9)">
+                9 Months<span class="freq-discount">–</span>
+              </button>
+              <button class="sub-freq-btn" id="dur-12" onclick="setDur(this,12)">
+                12 Months<span class="freq-discount">+2% off</span>
+              </button>
+            </div>
+
+            <p class="sub-note">We'll WhatsApp you before each delivery to confirm. Cancel anytime — no lock-in.</p>
+          </div>
+
           <!-- Row 1: Size + Price -->
           <div class="product-order-row">
             <div class="size-selector">
@@ -2318,7 +2448,9 @@ footer {
               <button class="size-btn" onclick="setSize(this,'10kg')">10 kg</button>
             </div>
             <span class="price-display" id="price-display">
-              <span class="price-offer" id="price-offer">₹899</span>
+              <span class="price-original" id="price-original" style="display:none">₹1,099</span>
+              <span class="price-offer" id="price-offer">₹1,099</span>
+              <span class="price-save" id="price-save" style="display:none">Save</span>
             </span>
             <span class="price-unit">per bag</span>
           </div>
@@ -2336,8 +2468,8 @@ footer {
           <!-- Row 3: Order total -->
           <div class="order-total-row">
             <span class="order-total-label">Order Total</span>
-            <span class="order-total-value" id="order-total">₹899</span>
-            <span class="order-total-note">Subject to stock confirmation</span>
+            <span class="order-total-value" id="order-total">₹699</span>
+            <span class="order-total-note" id="order-total-note">Subject to stock confirmation</span>
           </div>
           <p style="font-family:var(--font-ui);font-size:0.6rem;color:var(--terra);opacity:0.7;margin-top:-8px;">
             + Delivery charges applicable on all orders
@@ -2346,7 +2478,7 @@ footer {
           <!-- Row 4: WA button -->
           <a href="https://wa.me/919359781023?text=Hi%2C%20I%20want%20to%20order%20Navsatva%205kg%20x%201%20bag%20%3D%20%E2%82%B9899" class="btn-wa" id="wa-order-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Send Order Request on WhatsApp
+            <span id="wa-btn-label">Send Order Request on WhatsApp</span>
           </a>
           <p style="font-family:var(--font-ui);font-size:0.6rem;color:var(--terra);opacity:0.65;line-height:1.5;">
             We'll check stock and confirm your order within a few hours. No payment until we confirm availability.
@@ -2797,27 +2929,100 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// ── Product size + qty selector ──────────────────
-const prices = {
-  '5kg':  { price: 899,  priceFmt: '₹899',   label: '5kg' },
-  '10kg': { price: 1799, priceFmt: '₹1,799', label: '10kg' }
+// ── Product size + qty + subscription selector ──────────────────
+
+// Fixed prices — monthly = best discount, quarterly = least
+// 5kg floor: ₹899 (monthly/12mo) | 10kg floor: ₹1,699 (monthly/12mo)
+const pricingTable = {
+  '5kg': {
+    onetime:   { '–':  1099 },
+    monthly:   { '3':  929,  '6':  929,  '9':  929,  '12': 899 },
+    bimonthly: { '3':  969,  '6':  969,  '9':  969,  '12': 949 },
+    quarterly: { '3':  999,  '6':  999,  '9':  999,  '12': 969 }
+  },
+  '10kg': {
+    onetime:   { '–':  2099 },
+    monthly:   { '3':  1749, '6':  1749, '9':  1749, '12': 1699 },
+    bimonthly: { '3':  1849, '6':  1849, '9':  1849, '12': 1799 },
+    quarterly: { '3':  1899, '6':  1899, '9':  1899, '12': 1849 }
+  }
 };
 
+const mrp = { '5kg': 1099, '10kg': 2099 };
+
+const freqLabels  = { monthly: 'Monthly', bimonthly: 'Every 2 Months', quarterly: 'Quarterly' };
+const freqMonths  = { monthly: 1, bimonthly: 2, quarterly: 3 };
+
 let currentSize = '5kg';
+let currentType = 'onetime';
+let currentFreq = 'monthly';
+let currentDur  = 3;
 
 function fmtPrice(n) {
-  return '₹' + n.toLocaleString('en-IN');
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+function getPrice() {
+  if (currentType === 'onetime') return pricingTable[currentSize].onetime['–'];
+  return pricingTable[currentSize][currentFreq][String(currentDur)];
+}
+
+function deliveriesInDuration() {
+  return Math.max(1, Math.floor(currentDur / freqMonths[currentFreq]));
 }
 
 function updateOrder() {
-  const p = prices[currentSize];
-  const qty = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
+  const price   = getPrice();
+  const listMrp = mrp[currentSize];
+  const qty     = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
   document.getElementById('qty-input').value = qty;
-  const total = p.price * qty;
-  document.getElementById('order-total').textContent = fmtPrice(total);
+  const totalPerDelivery = price * qty;
 
-  // Build WhatsApp message
-  const msg = `Hi, I'd like to order Navsatva Atta:\n\nSize: ${p.label} per bag\nQty: ${qty} bag${qty > 1 ? 's' : ''}\nPrice per bag: ${p.priceFmt}\nTotal: ${fmtPrice(total)}\n\nPlease confirm availability. Thank you!`;
+  // Price display — MRP always struck through
+  const origEl  = document.getElementById('price-original');
+  const offerEl = document.getElementById('price-offer');
+  const saveEl  = document.getElementById('price-save');
+
+  origEl.textContent   = fmtPrice(listMrp);
+  origEl.style.display = 'inline';
+  offerEl.textContent  = fmtPrice(price);
+
+  const savePct = Math.round((1 - price / listMrp) * 100);
+  if (savePct > 0) {
+    saveEl.textContent   = `Save ${savePct}%`;
+    saveEl.style.display = 'inline';
+  } else {
+    saveEl.style.display = 'none';
+  }
+
+  // Order total row
+  const totalEl = document.getElementById('order-total');
+  const noteEl  = document.getElementById('order-total-note');
+
+  if (currentType === 'subscribe') {
+    const deliveries  = deliveriesInDuration();
+    const commitTotal = totalPerDelivery * deliveries;
+    totalEl.textContent = fmtPrice(totalPerDelivery);
+    noteEl.textContent  = `per delivery · ${deliveries} deliveries over ${currentDur} months · commitment: ${fmtPrice(commitTotal)}`;
+  } else {
+    totalEl.textContent = fmtPrice(totalPerDelivery);
+    noteEl.textContent  = 'Subject to stock confirmation';
+  }
+
+  // WA button label
+  document.getElementById('wa-btn-label').textContent =
+    currentType === 'subscribe' ? 'Start Subscription on WhatsApp' : 'Send Order Request on WhatsApp';
+
+  // WhatsApp message
+  let msg;
+  if (currentType === 'subscribe') {
+    const deliveries  = deliveriesInDuration();
+    const commitTotal = totalPerDelivery * deliveries;
+    msg = `Hi, I'd like to start a subscription for Navsatva Atta:\n\nSize: ${currentSize} per bag\nQty per delivery: ${qty} bag${qty > 1 ? 's' : ''}\nFrequency: ${freqLabels[currentFreq]}\nDuration: ${currentDur} months (${deliveries} deliveries)\nPrice per bag: ${fmtPrice(price)} (MRP ${fmtPrice(listMrp)})\nPer delivery total: ${fmtPrice(totalPerDelivery)}\nTotal commitment: ${fmtPrice(commitTotal)}\n\nPlease confirm availability and first delivery date. Thank you!`;
+  } else {
+    msg = `Hi, I'd like to order Navsatva Atta:\n\nSize: ${currentSize} per bag\nQty: ${qty} bag${qty > 1 ? 's' : ''}\nPrice per bag: ${fmtPrice(price)}\nTotal: ${fmtPrice(totalPerDelivery)}\n\nPlease confirm availability. Thank you!`;
+  }
+
   const waBtn = document.getElementById('wa-order-btn');
   if (waBtn) waBtn.href = `https://wa.me/919359781023?text=${encodeURIComponent(msg)}`;
 }
@@ -2826,15 +3031,38 @@ function setSize(btn, size) {
   document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentSize = size;
-  const p = prices[size];
-  document.getElementById('price-offer').textContent = p.priceFmt;
+  updateOrder();
+}
+
+function setOrderType(type) {
+  currentType = type;
+  document.querySelectorAll('.order-type-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${type}`).classList.add('active');
+  document.getElementById('sub-options').classList.toggle('visible', type === 'subscribe');
+  updateOrder();
+}
+
+function setFreq(btn, freq) {
+  currentFreq = freq;
+  document.querySelectorAll('.sub-freq-btn').forEach(b => {
+    if (b.closest('#sub-dur-row')) return;
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  updateOrder();
+}
+
+function setDur(btn, months) {
+  currentDur = months;
+  document.querySelectorAll('#sub-dur-row .sub-freq-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   updateOrder();
 }
 
 function changeQty(delta) {
-  const input = document.getElementById('qty-input');
+  const input  = document.getElementById('qty-input');
   const newVal = Math.max(1, Math.min(50, (parseInt(input.value) || 1) + delta));
-  input.value = newVal;
+  input.value  = newVal;
   updateOrder();
 }
 
