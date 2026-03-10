@@ -468,27 +468,37 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
   position: sticky; top: 100px;
 }
 .farmer-quote {
-  background: var(--rose-pale);
-  padding: 36px 32px;
-  border-radius: 2px;
   position: relative;
 }
-.farmer-quote::before {
-  content: '\201C';
-  position: absolute; top: -10px; left: 20px;
+.quote-card {
+  background: var(--rose-pale);
+  color: var(--soil);
+  padding: 40px;
+  position: relative;
   font-family: var(--font-display);
-  font-size: 5rem; color: var(--rose);
-  line-height: 1; opacity: 0.4;
+  border-radius: 4px;
+  overflow: hidden;
 }
-.farmer-quote blockquote {
+.quote-mark {
+  font-size: 120px;
+  color: #dccac3;
+  font-weight: bold;
+  line-height: 1;
+  position: absolute;
+  font-family: var(--font-display);
+}
+.quote-mark.top-left { top: -10px; left: 16px; }
+.quote-mark.bottom-right { bottom: -40px; right: 20px; }
+.quote-content { padding: 20px; }
+.quote-content p {
   font-family: var(--font-display);
   font-size: 1.15rem; font-style: italic;
-  color: var(--soil); line-height: 1.7;
-  margin-bottom: 18px;
+  color: var(--soil); line-height: 1.75;
+  margin-bottom: 20px;
 }
-.farmer-quote cite {
+.quote-content cite {
   font-family: var(--font-ui);
-  font-size: 0.62rem; font-weight: 600;
+  font-size: 0.58rem; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--terra); font-style: normal;
 }
@@ -523,6 +533,166 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 3px; margin-top: 56px;
 }
+/* ── Founders Section ── */
+#founders {
+  background: #1C1C16 !important;
+  padding: 0 !important;
+}
+#founders .inner {
+  padding-top: 80px;
+  padding-bottom: 60px;
+}
+#founders .eyebrow { color: #C8897E; }
+#founders .eyebrow::before { background: #C8897E; }
+#founders .section-title { color: #FAF6F0; }
+#founders .section-title em { color: #C8897E; }
+#founders .deva { color: rgba(250,246,240,0.25); }
+
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-top: 0;
+}
+
+.founder-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: #1C1C16;
+}
+
+.founder-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+  filter: grayscale(15%) brightness(0.82);
+}
+.founder-card:hover .founder-photo {
+  transform: scale(1.05);
+  filter: grayscale(0%) brightness(0.9);
+}
+
+.founder-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.founder-placeholder-bg { position: absolute; inset: 0; }
+
+.founder-card:nth-child(1) .founder-placeholder-bg {
+  background: linear-gradient(155deg, #2E4A1E 0%, #1A2C10 100%);
+}
+.founder-card:nth-child(2) .founder-placeholder-bg {
+  background: linear-gradient(155deg, #4A2828 0%, #2C1616 100%);
+}
+.founder-card:nth-child(3) .founder-placeholder-bg {
+  background: linear-gradient(155deg, #263820 0%, #141E0C 100%);
+}
+
+.founder-initial-large {
+  position: relative; z-index: 1;
+  font-family: Georgia, serif;
+  font-size: min(14vw, 180px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+.founder-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10,10,8,0.98) 0%,
+    rgba(10,10,8,0.72) 35%,
+    rgba(10,10,8,0.12) 62%,
+    transparent 100%
+  );
+}
+
+.founder-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 32px 30px 36px;
+  z-index: 3;
+}
+
+.founder-number {
+  font-family: Arial, sans-serif;
+  font-size: 0.48rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(200,137,126,0.5);
+  display: block; margin-bottom: 8px;
+}
+
+.founder-name {
+  font-family: Georgia, serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-weight: 600; color: #FAF6F0;
+  letter-spacing: 0.01em; line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.founder-role {
+  font-family: Arial, sans-serif;
+  font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #C8897E;
+  display: block; margin-bottom: 0;
+}
+
+.founder-bio {
+  font-family: Georgia, serif;
+  font-size: 0.8rem; line-height: 1.8;
+  color: rgba(250,246,240,0.6);
+  max-height: 0; overflow: hidden;
+  opacity: 0; transform: translateY(8px);
+  transition: max-height 0.5s ease, opacity 0.4s ease 0.08s, transform 0.4s ease 0.08s;
+  margin-top: 0;
+}
+.founder-card:hover .founder-bio {
+  max-height: 200px; opacity: 1;
+  transform: translateY(0); margin-top: 14px;
+}
+
+/* Top accent sweep on hover */
+.founder-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 5;
+  background: linear-gradient(90deg, #C8897E 0%, transparent 100%);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s ease;
+}
+.founder-card:hover::after { transform: scaleX(1); }
+
+.founder-photo-hint {
+  position: absolute; top: 18px; right: 18px; z-index: 4;
+  font-family: Arial, sans-serif;
+  font-size: 0.42rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(250,246,240,0.28);
+  background: rgba(0,0,0,0.3);
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid rgba(250,246,240,0.1);
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  #founders .inner { padding-top: 60px; padding-bottom: 40px; }
+  .founders-grid { grid-template-columns: 1fr 1fr; }
+  .founder-card:last-child { grid-column: span 2; aspect-ratio: 16/8; }
+  .founder-bio { max-height: 160px; opacity: 1; transform: none; margin-top: 12px; }
+}
+@media (max-width: 600px) {
+  #founders .inner { padding-top: 48px; padding-bottom: 32px; }
+  .founders-grid { grid-template-columns: 1fr; }
+  .founder-card { aspect-ratio: 4/3; }
+  .founder-card:last-child { grid-column: span 1; }
+  .founder-bio { max-height: 140px; opacity: 1; transform: none; margin-top: 10px; }
+}
+
 .farmer-card {
   background: var(--warm-white);
   padding: 40px 32px;
@@ -1477,7 +1647,7 @@ footer {
   <div class="hero-right">
     <div class="launch-ribbon">
       <span class="launch-dot"></span>
-      Now Available — पहला उत्पाद लॉन्च
+      Now Available · पहला उत्पाद लॉन्च
     </div>
     <div class="hero-product-card fade-up">
       <!-- 9-grain orbit -->
@@ -1551,9 +1721,9 @@ footer {
           "Karmath exists for one reason: to bring genuinely unadulterated, organically grown food back to Indian families — not as a premium novelty, but as the standard."
         </p>
         <div class="manifesto-text fade-up">
-          <p>We started because we noticed something uncomfortable. People in our circle — healthy, young, cooking at home — were developing thyroid issues, elevated cholesterol, pre-diabetic markers. Not because they were eating badly. Because what they thought was good food wasn't.</p>
-          <p>The commercial flour ecosystem is built on shelf life, visual appeal, and cost efficiency. Cold-pressing is replaced with high-heat extraction. Stone grinding is replaced with roller milling. Organic soil is replaced with chemical-intensive farming. And at every step, nutrition is the casualty.</p>
-          <p>Karmath is the answer we built for ourselves. Every product we make carries a single, non-negotiable commitment: what you see on the label is exactly what is in the bag.</p>
+          <p>We started because we noticed something uncomfortable. People in our circle, healthy and young and cooking at home, were developing thyroid issues, elevated cholesterol, pre-diabetic markers. The problem wasn't how they were eating. It was what they were eating.</p>
+          <p>The commercial flour industry is built on shelf life, visual appeal, and cost efficiency. Cold-pressing gives way to high-heat extraction. Stone grinding gives way to roller milling. Organic soil gives way to chemical-intensive farming. At every step, nutrition is what gets cut.</p>
+          <p>Karmath is the answer we built for ourselves. Every product we make carries one non-negotiable commitment: what you see on the label is exactly what is in the bag.</p>
         </div>
       </div>
 
@@ -1562,17 +1732,17 @@ footer {
           <div class="commit-card">
             <span class="commit-icon">🌱</span>
             <div class="commit-title">Organic Without Compromise</div>
-            <p class="commit-text">Every grain sourced from certified organic farms in MP. No chemical fertilisers, no pesticides — ever.</p>
+            <p class="commit-text">Every grain sourced from certified organic farms in MP. No chemical fertilisers, no pesticides. Ever.</p>
           </div>
           <div class="commit-card">
             <span class="commit-icon">🚫</span>
             <div class="commit-title">Unadulterated Always</div>
-            <p class="commit-text">No additives, no bleaching agents, no preservatives, no flow agents. Nothing that wasn't in the grain.</p>
+            <p class="commit-text">No additives, no bleaching agents, no preservatives, no flow agents. Nothing that wasn't in the grain to begin with.</p>
           </div>
           <div class="commit-card">
             <span class="commit-icon">🧊</span>
             <div class="commit-title">Cold Pressed · Stone Ground</div>
-            <p class="commit-text">Heat destroys nutrition. We cold-press and stone-grind to preserve everything the grain was grown with.</p>
+            <p class="commit-text">Heat destroys nutrition. We cold-press and stone-grind so nothing the grain was grown with gets lost in processing.</p>
           </div>
           <div class="commit-card">
             <span class="commit-icon">🏡</span>
@@ -1582,12 +1752,12 @@ footer {
           <div class="commit-card">
             <span class="commit-icon">🫀</span>
             <div class="commit-title">Health Is the Only Goal</div>
-            <p class="commit-text">Every decision — sourcing, processing, packaging — is made through one filter: is this better for the person eating it?</p>
+            <p class="commit-text">Every decision we make, from sourcing to packaging, goes through one question: is this better for the person eating it?</p>
           </div>
           <div class="commit-card">
             <span class="commit-icon">🤝</span>
             <div class="commit-title">Fair to the Farmer</div>
-            <p class="commit-text">We pay fair prices, contract direct, and build long-term relationships. Their sustainability is ours.</p>
+            <p class="commit-text">We pay fair prices, contract direct, and work for the long term. Their ability to keep farming sustainably is part of what we're building.</p>
           </div>
         </div>
         <div class="manifesto-pledge fade-up">
@@ -1603,24 +1773,35 @@ footer {
 <section id="story">
   <div class="inner">
     <div class="eyebrow fade-up">Our Story</div>
-    <h2 class="section-title fade-up">A decade of consulting. <em>One personal crisis.</em></h2>
+    <h2 class="section-title fade-up">Three different worlds. <em>One shared question.</em></h2>
     <span class="deva fade-up">हमारी कहानी · आमची गोष्ट</span>
 
     <div class="story-layout">
       <div class="story-text fade-up">
-        <p>It started with a series of routine health checks that weren't routine at all. Four people in our immediate circle — all under 40, all cooking at home, none of them sedentary — came back with elevated thyroid markers, high cholesterol, or pre-diabetic readings within the same year.</p>
-        <p>After a decade in management consulting, the instinct was to investigate the root cause, not the symptom. The kitchen was the obvious starting point. Everything looked right — they were eating home-cooked meals, using whole grains, avoiding processed food. But the flour told a different story.</p>
-        <p>Commercial atta — even the brands that positioned themselves as healthy — was roller-milled at high heat, bleached for appearance, and dosed with flow agents and shelf-life extenders. The grain was there. The nutrition wasn't.</p>
-        <p>That led to Madhya Pradesh. To Chhindwara, Sehore, and Hoshangabad — the black cotton soil belt that has grown jowar, bajra, and ragi for generations. Six farmers, soil tests, grain testing, and months of milling trials later, the answer became clear. Organically grown grain, cold-pressed, stone-ground, packed within the week — consistently tested higher on protein, fibre, and micronutrients than anything available commercially.</p>
-        <p>Navsatva was the first product. Nine grains, nine reasons to choose it. The brand is called Karmath — Sanskrit for devoted to one's work — because that is exactly what this required.</p>
+        <p>It started with a string of health checks that should have been routine. Four people in our immediate circle, all under 40, all cooking at home, came back with elevated thyroid markers, high cholesterol, or pre-diabetic readings within the same year.</p>
+        <p>One of us came from management consulting, trained to trace problems to their root rather than treat the symptom. One came from technology, used to thinking in systems and supply chains. And one had spent years on the ground in rural Madhya Pradesh, building real relationships with farmers and understanding organic agriculture from the soil up.</p>
+        <p>We started in the kitchen. Everything looked right — home-cooked meals, whole grains, no processed food. But the flour told a different story.</p>
+        <p>Commercial atta, even the brands that call themselves healthy, is roller-milled at high heat, bleached for appearance, and dosed with flow agents and shelf-life extenders. The grain is there. The nutrition largely isn't.</p>
+        <p>That took us to Madhya Pradesh. To Chhindwara, Sehore, and Hoshangabad, the black cotton soil belt that has grown jowar, bajra, and ragi for generations. Six farmers, soil tests, grain testing, and months of milling trials later, the answer was clear. Organically grown grain, cold-pressed, stone-ground, packed within the week — it tested consistently higher on protein, fibre, and micronutrients than anything available commercially.</p>
+        <p>Navsatva was the first product — nine grains. The brand is Karmath, Sanskrit for devoted to one's work, because that is exactly what this required.</p>
       </div>
 
       <div class="story-aside">
         <div class="farmer-quote fade-up">
-          <blockquote>"The land was tired. Not broken. Just tired. Like it had been asked to give too much, too fast. When we stopped using the chemicals, it took two seasons. Then it remembered how to grow."</blockquote>
-          <cite>— A farmer in Sehore, MP<br>सीहोर, मध्यप्रदेश के एक किसान</cite>
+          <div class="quote-card">
+            <span class="quote-mark top-left">&#x201C;</span>
+            <div class="quote-content">
+              <p>The land was tired. Not broken. Just tired. Like it had been asked to give too much, too fast. When we stopped using the chemicals, it took two seasons. Then it remembered how to grow.</p>
+              <cite>— A Farmer in Sehore, MP<br>सीहोर, मध्यप्रदेश के एक किसान</cite>
+            </div>
+            <span class="quote-mark bottom-right">&#x201D;</span>
+          </div>
         </div>
         <div class="story-stats fade-up">
+          <div class="stat-box">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Founders</div>
+          </div>
           <div class="stat-box">
             <div class="stat-num">6</div>
             <div class="stat-label">Farmer Partners</div>
@@ -1630,16 +1811,76 @@ footer {
             <div class="stat-label">MP Districts</div>
           </div>
           <div class="stat-box">
-            <div class="stat-num">10+</div>
-            <div class="stat-label">Years Consulting</div>
-          </div>
-          <div class="stat-box">
             <div class="stat-num">9</div>
             <div class="stat-label">Grains in Navsatva</div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ FOUNDERS ══ -->
+<section id="founders">
+  <div class="inner">
+    <div class="eyebrow fade-up">The Founding Team</div>
+    <h2 class="section-title fade-up">We didn't plan to start a food brand. <em>We just couldn't stop asking — what are we actually eating?</em></h2>
+    <span class="deva fade-up">संस्थापक · संस्थापक</span>
+  </div>
+
+  <div class="founders-grid">
+
+    <!-- Harshad -->
+    <div class="founder-card fade-up">
+      <!-- <img class="founder-photo" src="harshad.jpg" alt="Harshad"> -->
+      <div class="founder-placeholder">
+        <div class="founder-placeholder-bg"></div>
+        <div class="founder-initial-large">H</div>
+      </div>
+      <div class="founder-overlay"></div>
+      <span class="founder-photo-hint">Photo coming soon</span>
+      <div class="founder-content">
+        <span class="founder-number">01 / Co-Founder</span>
+        <div class="founder-name">Harshad</div>
+        <span class="founder-role">Strategy & Operations</span>
+        <p class="founder-bio">Over a decade in management consulting, working with companies across banking, automotive, and manufacturing. The instinct was always the same: trace the problem to its root before proposing a solution. At Karmath, nothing is different. If a sourcing decision, a process step, or a claim on the label doesn't hold up to scrutiny, it doesn't go out.</p>
+      </div>
+    </div>
+
+    <!-- Himani -->
+    <div class="founder-card fade-up">
+      <!-- <img class="founder-photo" src="himani.jpg" alt="Himani"> -->
+      <div class="founder-placeholder">
+        <div class="founder-placeholder-bg"></div>
+        <div class="founder-initial-large">H</div>
+      </div>
+      <div class="founder-overlay"></div>
+      <span class="founder-photo-hint">Photo coming soon</span>
+      <div class="founder-content">
+        <span class="founder-number">02 / Co-Founder</span>
+        <div class="founder-name">Himani</div>
+        <span class="founder-role">Technology & Systems</span>
+        <p class="founder-bio">A background in IT and systems thinking means Himani sees how the parts connect — supply chain, quality tracking, how an order placed on WhatsApp becomes a bag at your door. The infrastructure behind Karmath is quietly her work: reliable, low-friction, and built to scale without losing what makes it personal.</p>
+      </div>
+    </div>
+
+    <!-- Himanshu -->
+    <div class="founder-card fade-up">
+      <!-- <img class="founder-photo" src="himanshu.jpg" alt="Himanshu"> -->
+      <div class="founder-placeholder">
+        <div class="founder-placeholder-bg"></div>
+        <div class="founder-initial-large">H</div>
+      </div>
+      <div class="founder-overlay"></div>
+      <span class="founder-photo-hint">Photo coming soon</span>
+      <div class="founder-content">
+        <span class="founder-number">03 / Co-Founder</span>
+        <div class="founder-name">Himanshu</div>
+        <span class="founder-role">Farmer Relations & Organic Sourcing</span>
+        <p class="founder-bio">Years on the ground in rural Madhya Pradesh, not on farm visits but in the kind of long-term relationships where a farmer tells you which season was hard and why. Himanshu knows which soil gives what, which farmer has been organic for how long, and why that matters by the time the grain reaches the mill. He is the reason we can say what we say on the label.</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1657,7 +1898,7 @@ footer {
         <div class="farmer-region">Sehore District · MP</div>
         <div class="farmer-name">Farmer from Sehore</div>
         <span class="farmer-name-hi">सेहोर का किसान</span>
-        <p class="farmer-desc">Third-generation farmer on black cotton soil. Shifted to organic farming after two decades of chemical use left the soil depleted. Now grows Wheat, Black Wheat, and Jowar on five acres — all under Karmath's direct procurement contract.</p>
+        <p class="farmer-desc">Third-generation farmer on black cotton soil. Shifted to organic farming after two decades of chemical use left the soil depleted. Now grows Wheat, Black Wheat, and Jowar on five acres, all under Karmath's direct procurement contract.</p>
         <div class="farmer-crop-tags">
           <span class="crop-tag">Wheat</span>
           <span class="crop-tag">Black Wheat</span>
@@ -1704,7 +1945,7 @@ footer {
         <div class="farmer-region">Chhindwara District · MP</div>
         <div class="farmer-name">Farmer from Chhindwara</div>
         <span class="farmer-name-hi">छिंदवाड़ा का किसान</span>
-        <p class="farmer-desc">Specialist in millets — bajra and ragi have been the backbone of this family's farming for four generations. Soil testing conducted with Karmath confirmed 18% higher mineral content compared to chemically farmed neighbouring plots.</p>
+        <p class="farmer-desc">Specialist in millets. Bajra and ragi have been the backbone of this family's farming for four generations. Soil testing conducted with Karmath confirmed 18% higher mineral content compared to chemically farmed neighbouring plots.</p>
         <div class="farmer-crop-tags">
           <span class="crop-tag">Bajra</span>
           <span class="crop-tag">Ragi</span>
@@ -1751,7 +1992,7 @@ footer {
         <div class="farmer-region">Hoshangabad District · MP</div>
         <div class="farmer-name">Farmer from Hoshangabad</div>
         <span class="farmer-name-hi">होशंगाबाद का किसान</span>
-        <p class="farmer-desc">Grows pulses and legumes on the fertile alluvial banks of the Narmada. Chana, Moong, and Arhar are grown in rotation — a practice that naturally replenishes nitrogen in the soil without external inputs.</p>
+        <p class="farmer-desc">Grows pulses and legumes on the fertile alluvial banks of the Narmada. Chana, Moong, and Arhar are grown in rotation, a practice that naturally replenishes nitrogen in the soil without external inputs.</p>
         <div class="farmer-crop-tags">
           <span class="crop-tag">Chana</span>
           <span class="crop-tag">Moong</span>
@@ -1804,7 +2045,7 @@ footer {
       <div class="eyebrow fade-up">Our Products</div>
       <h2 class="section-title fade-up">Everything we make,<br><em>made the same way.</em></h2>
       <span class="deva fade-up">हमारे उत्पाद · आमची उत्पादने</span>
-      <p class="fade-up">Every product under the Karmath name begins identically — organically grown, cold-pressed, stone ground, unadulterated. The grain changes. The commitment doesn't.</p>
+      <p class="fade-up">Every product under the Karmath name begins identically: organically grown, cold-pressed, stone ground, unadulterated. The grain changes. The commitment doesn't.</p>
     </div>
 
     <!-- NAVSATVA — Featured -->
@@ -2044,7 +2285,7 @@ footer {
           <h3 class="product-title">Navsatva</h3>
           <span class="product-title-sub">नवसत्व · नवसत्व — 9 अनाज मल्टी मिलेट आटा · ९ धान्य मल्टी मिलेट आटा</span>
         </div>
-        <p class="product-desc">Navsatva is Karmath's 9-grain multi millet atta — nine organically grown grains from Madhya Pradesh, cold-pressed and stone ground together. No heat treatment. No bleaching. No preservatives. No additives. Packed the same week it's milled. Shelf life 60 days — intentionally short, because real food doesn't last forever.</p>
+        <p class="product-desc">Navsatva is nine organically grown grains from Madhya Pradesh, cold-pressed and stone ground together. No heat treatment. No bleaching. No preservatives. No additives. Packed the same week it's milled. The shelf life is 60 days, intentionally. Real food doesn't last forever.</p>
         <div class="product-benefits">
           <span class="benefit-chip">🌿 Better Digestion</span>
           <span class="benefit-chip">⚖️ Weight Management</span>
@@ -2060,7 +2301,7 @@ footer {
           </div>
           <div class="product-attr">
             <span class="attr-label">Origin</span>
-            <span class="attr-value">MP — Chhindwara, Sehore, Hoshangabad</span>
+            <span class="attr-value">MP: Chhindwara, Sehore, Hoshangabad</span>
           </div>
           <div class="product-attr">
             <span class="attr-label">Shelf Life</span>
@@ -2133,7 +2374,7 @@ footer {
           <div class="coming-name">Sattu Atta</div>
           <span class="coming-name-hi">सत्तू आटा</span>
         </div>
-        <p class="coming-desc">Roasted chana flour — stone ground, unadulterated. High protein, cooling in summer. A staple Bihar & UP ingredient, done right.</p>
+        <p class="coming-desc">Roasted chana flour, stone ground, unadulterated. High protein, cooling in summer. A staple Bihar & UP ingredient, done right.</p>
         <div class="coming-benefits">
           <span class="coming-benefit">High Protein</span>
           <span class="coming-benefit">Cooling</span>
@@ -2148,7 +2389,7 @@ footer {
           <div class="coming-name">Single Grain Atta</div>
           <span class="coming-name-hi">एकल अनाज आटा</span>
         </div>
-        <p class="coming-desc">Pure jowar, bajra, or ragi — each stone ground separately. For households that want one grain's full benefit without mixing.</p>
+        <p class="coming-desc">Pure jowar, bajra, or ragi, each stone ground separately. For households that want one grain's full benefit without mixing.</p>
         <div class="coming-benefits">
           <span class="coming-benefit">Gluten Free</span>
           <span class="coming-benefit">Pure Grain</span>
@@ -2163,7 +2404,7 @@ footer {
           <div class="coming-name">Heritage Rice</div>
           <span class="coming-name-hi">विरासती चावल</span>
         </div>
-        <p class="coming-desc">Indigenous rice varieties from MP's fertile belts — Kali Mooch, Sona Masoori — grown organically, unpolished, with full bran intact.</p>
+        <p class="coming-desc">Indigenous rice varieties from MP's fertile belts: Kali Mooch, Sona Masoori, grown organically, unpolished, with full bran intact.</p>
         <div class="coming-benefits">
           <span class="coming-benefit">Unpolished</span>
           <span class="coming-benefit">Indigenous Variety</span>
@@ -2178,7 +2419,7 @@ footer {
           <div class="coming-name">Cold-Pressed Oils</div>
           <span class="coming-name-hi">कोल्ड प्रेस्ड तेल</span>
         </div>
-        <p class="coming-desc">Groundnut and sesame, cold-pressed on wooden ghani. The same principle that drives Karmath's atta — no heat, no refining, nothing removed.</p>
+        <p class="coming-desc">Groundnut and sesame, cold-pressed on wooden ghani. The same principle behind Karmath's atta: no heat, no refining, nothing removed.</p>
         <div class="coming-benefits">
           <span class="coming-benefit">Wooden Ghani</span>
           <span class="coming-benefit">Unrefined</span>
@@ -2216,7 +2457,7 @@ footer {
       <div class="phil-card">
         <span class="phil-icon">🚫</span>
         <div class="phil-title">Nothing Added = Nothing Removed</div>
-        <p class="phil-text">Bleaching agents, flow agents, and preservatives don't just extend shelf life — they alter how food interacts with your gut. Clean food means your body handles it as it evolved to.</p>
+        <p class="phil-text">Bleaching agents, flow agents, and preservatives don't just extend shelf life. They alter how food interacts with your gut. Clean food means your body handles it the way it was designed to.</p>
       </div>
     </div>
 
@@ -2235,7 +2476,7 @@ footer {
           <span class="benefit-icon">🌿</span>
           <div class="benefit-title">Digestion</div>
           <span class="benefit-title-hi">पाचन · पचन</span>
-          <p class="benefit-text">Higher fibre from nine grain sources — not just wheat. Most people notice less bloating and more regularity within two weeks of switching.</p>
+          <p class="benefit-text">Higher fibre from nine grain sources, not just wheat. Most people notice less bloating and more regularity within two weeks of switching.</p>
           <span class="benefit-note">Typically noticeable within 2 weeks</span>
         </div>
         <div class="benefit-card">
@@ -2249,7 +2490,7 @@ footer {
           <span class="benefit-icon">🩸</span>
           <div class="benefit-title">Blood Sugar</div>
           <span class="benefit-title-hi">ब्लड शुगर · रक्तातील साखर</span>
-          <p class="benefit-text">Particularly useful for pre-diabetic management. Not a replacement for medical care — but a daily food that works with your management, not against it.</p>
+          <p class="benefit-text">Particularly useful for pre-diabetic management. Not a replacement for medical care, but a daily food that works with your management, not against it.</p>
           <span class="benefit-note">Keep your doctor involved</span>
         </div>
         <div class="benefit-card">
@@ -2271,7 +2512,7 @@ footer {
           <div class="benefit-title">Thyroid & Cholesterol</div>
           <span class="benefit-title-hi">थायरॉयड · थायरॉईड</span>
           <p class="benefit-text">Multiple people in our test cohort saw improvements in thyroid and cholesterol markers after switching. The mechanism is likely the elimination of chemical additives combined with better fibre intake.</p>
-          <span class="benefit-note">Consult your doctor — food is one factor</span>
+          <span class="benefit-note">Consult your doctor; food is one factor</span>
         </div>
       </div>
     </div>
@@ -2290,7 +2531,7 @@ footer {
           <span class="benefit-icon">🌡️</span>
           <div class="benefit-title">Naturally Cooling</div>
           <span class="benefit-title-hi">शीतलता प्रदान करे</span>
-          <p class="benefit-text">Traditional wisdom backed by modern nutrition — sattu's fibre and mineral profile genuinely helps regulate body temperature. A summer staple for a reason.</p>
+          <p class="benefit-text">Traditional wisdom, backed by modern nutrition: sattu's fibre and mineral profile genuinely helps regulate body temperature. It has been a summer staple for a reason.</p>
           <span class="benefit-note">Traditional Indian superfood</span>
         </div>
         <div class="benefit-card">
@@ -2313,7 +2554,7 @@ footer {
           <span class="benefit-icon">🍚</span>
           <div class="benefit-title">Full Bran Intact</div>
           <span class="benefit-title-hi">पूर्ण चोकर सहित</span>
-          <p class="benefit-text">Unpolished rice retains the bran layer — the part that carries B vitamins, fibre, and minerals. Polishing removes it entirely for visual appeal.</p>
+          <p class="benefit-text">Unpolished rice retains the bran layer, the part that carries B vitamins, fibre, and minerals. Polishing removes it entirely — purely for visual appeal.</p>
           <span class="benefit-note">Unpolished = more nutrition</span>
         </div>
         <div class="benefit-card">
@@ -2327,7 +2568,7 @@ footer {
           <span class="benefit-icon">🌱</span>
           <div class="benefit-title">Organically Grown</div>
           <span class="benefit-title-hi">जैविक उत्पादित</span>
-          <p class="benefit-text">No pesticide residue. No chemical fertiliser. The grain tests clean — something that can't be said for most commercial rice on Indian shelves.</p>
+          <p class="benefit-text">No pesticide residue. No chemical fertiliser. The grain tests clean — something that cannot be said for most commercial rice on Indian shelves.</p>
           <span class="benefit-note">Tested, traceable, clean</span>
         </div>
         <div class="tab-coming" style="grid-column:1/-1; padding:20px 0 0;">
@@ -2350,7 +2591,7 @@ footer {
           <span class="benefit-icon">🫙</span>
           <div class="benefit-title">Unrefined</div>
           <span class="benefit-title-hi">अपरिष्कृत</span>
-          <p class="benefit-text">Refining removes colour, smell, and taste — and with them, the beneficial compounds. Karmath oils are unrefined — they smell and taste the way the source ingredient does.</p>
+          <p class="benefit-text">Refining removes colour, smell, and taste, and with them the beneficial compounds. Karmath oils are unrefined, so they smell and taste exactly the way the source ingredient does.</p>
           <span class="benefit-note">Full flavour, full nutrition</span>
         </div>
         <div class="benefit-card">
@@ -2403,7 +2644,7 @@ footer {
       <div class="knowledge-card fade-up" style="transition-delay:0.4s">
         <span class="knowledge-category">Cooking</span>
         <h3 class="knowledge-title">Making the Switch to Multi-Grain Atta — What to Expect in the First Month</h3>
-        <p class="knowledge-excerpt">Multi-grain atta behaves differently in the kitchen. Dough texture, water absorption, chapati colour, shelf life — what's different, what to adjust, and what to expect from your body as it adapts.</p>
+        <p class="knowledge-excerpt">Multi-grain atta behaves differently in the kitchen. Dough texture, water absorption, chapati colour, shelf life. What's different, what to adjust, and what to expect from your body as it adapts.</p>
         <a href="#" class="knowledge-read" onclick="openBlog('blog5');return false;">Read Article</a>
       </div>
       <div class="knowledge-card fade-up" style="transition-delay:0.5s">
@@ -2429,7 +2670,7 @@ footer {
           <div class="step-num">01</div>
           <div class="step-content">
             <div class="step-title">Send us a WhatsApp message</div>
-            <p class="step-text">Tell us what you need — product, quantity, and your delivery address. We're real people on the other end. Ask anything.</p>
+            <p class="step-text">Tell us what you need: product, quantity, and your delivery address. We're real people on the other end. Ask anything.</p>
           </div>
         </div>
         <div class="order-step fade-up" style="transition-delay:0.1s">
@@ -2443,7 +2684,7 @@ footer {
           <div class="step-num">03</div>
           <div class="step-content">
             <div class="step-title">We mill and pack fresh for your order</div>
-            <p class="step-text">We don't carry large pre-milled stock. Your order triggers a fresh milling run where possible. This is what the 60-day shelf life means — it was milled recently.</p>
+            <p class="step-text">We don't carry large pre-milled stock. Your order triggers a fresh milling run where possible. This is what the 60-day shelf life means: it was milled recently.</p>
           </div>
         </div>
         <div class="order-step fade-up" style="transition-delay:0.3s">
@@ -2491,6 +2732,7 @@ footer {
         <ul class="footer-links">
           <li><a href="#manifesto" onclick="scrollTo('manifesto')">Our Belief</a></li>
           <li><a href="#story" onclick="scrollTo('story')">Our Story</a></li>
+          <li><a href="#founders" onclick="scrollTo('founders')">The Team</a></li>
           <li><a href="#farmers" onclick="scrollTo('farmers')">The Farmers</a></li>
           <li><a href="#products" onclick="scrollTo('products')">Products</a></li>
           <li><a href="#knowledge" onclick="scrollTo('knowledge')">Knowledge</a></li>
@@ -2667,18 +2909,18 @@ const blogs = {
     title: "Why Cold-Pressed Atta Is Different From What You're Buying",
     meta: ["8 min read", "Karmath · कर्मठ", "Nutrition & Processing"],
     body: `
-      <p>Most Indian households buy atta without thinking about how it was made. But the process used to mill grain into flour makes a measurable difference — in nutritional value, in taste, and in how your body responds to the roti you eat every day.</p>
+      <p>Most Indian households buy atta without thinking about how it was made. But the process used to mill grain into flour makes a measurable difference: in nutritional value, in taste, and in how your body responds to the roti you eat every day.</p>
 
       <h3>What happens inside a roller mill</h3>
       <p>The atta on supermarket shelves is almost universally roller-milled. In roller milling, grain is fed between high-speed metal cylinders that crush and grind it under mechanical pressure and friction. The process is fast, efficient, and produces a uniform, fine-textured flour that bakes predictably. But speed has a cost.</p>
-      <p>Roller milling generates heat — typically between 60°C and 85°C inside the milling chamber, and sometimes higher. Sustained heat at these temperatures triggers a chain of changes in the grain's nutritional profile that manufacturers rarely advertise.</p>
+      <p>Roller milling generates heat, typically between 60°C and 85°C inside the milling chamber, and sometimes higher. Sustained heat at these temperatures triggers a chain of changes in the grain's nutritional profile that manufacturers rarely advertise.</p>
 
       <h4>What heat destroys in your flour</h4>
       <ul>
-        <li><strong>Wheat germ oil oxidises:</strong> The wheat germ is the most nutritionally dense part of the grain — it contains Vitamin E, B vitamins, essential fatty acids, and plant sterols. At temperatures above 60°C, the unsaturated fatty acids in germ oil begin to oxidise. Oxidised oils are not just nutritionally inert — they produce free radicals when metabolised. Most commercial millers remove the germ entirely before milling to prevent rancidity, which solves the oxidation problem by eliminating the nutrition.</li>
+        <li><strong>Wheat germ oil oxidises:</strong> The wheat germ is the most nutritionally dense part of the grain. It contains Vitamin E, B vitamins, essential fatty acids, and plant sterols. At temperatures above 60°C, the unsaturated fatty acids in germ oil begin to oxidise. Oxidised oils are not just nutritionally inert. They produce free radicals when metabolised. Most commercial millers remove the germ entirely before milling to prevent rancidity, which solves the oxidation problem by eliminating the nutrition.</li>
         <li><strong>B vitamins degrade:</strong> Thiamine (B1), riboflavin (B2), niacin (B3), and folate are heat-sensitive. Studies on milling temperature show measurable losses of B1 and folate at temperatures above 70°C. These vitamins play direct roles in energy metabolism, cell repair, and neurological function.</li>
-        <li><strong>Bran fibre structure changes:</strong> The outer bran layer contains both soluble and insoluble fibre. Heat affects the hydration capacity of bran fibre — reducing how effectively it absorbs water in the gut, which partly determines its glycaemic and satiety effects.</li>
-        <li><strong>Enzyme activity is lost:</strong> Whole grains contain naturally occurring enzymes — amylases, proteases, lipases — that aid digestion. Sustained heat above 65°C denatures most of these enzymes. The flour you buy may be nutritionally complete on a label, but enzymatically inert.</li>
+        <li><strong>Bran fibre structure changes:</strong> The outer bran layer contains both soluble and insoluble fibre. Heat affects the hydration capacity of bran fibre — which reduces how effectively it absorbs water in the gut, affecting both glycaemic response and satiety.</li>
+        <li><strong>Enzyme activity is lost:</strong> Whole grains contain naturally occurring enzymes: amylases, proteases, lipases. that aid digestion. Sustained heat above 65°C denatures most of these enzymes. The flour may look complete on a label but be enzymatically dead.</li>
       </ul>
 
       <div class="blog-callout">
@@ -2687,14 +2929,14 @@ const blogs = {
       </div>
 
       <h3>What cold pressing does differently</h3>
-      <p>Cold pressing — in the context of atta — refers to slow stone grinding at temperatures that stay below 45°C. The grinding stones turn slowly. There is no friction build-up. The bran, germ, and endosperm are ground together, not separated. The process takes longer and produces less flour per hour, which is why it costs more. But what remains in the flour is the full grain — germ oil intact, bran fibre structure preserved, B vitamins undamaged.</p>
+      <p>Cold pressing, in the context of atta, refers to slow stone grinding at temperatures that stay below 45°C. The grinding stones turn slowly. There is no friction build-up. The bran, germ, and endosperm are ground together, not separated. The process takes longer and produces less flour per hour, which is why it costs more. But what remains in the flour is the full grain: germ oil intact, bran fibre structure preserved, B vitamins undamaged.</p>
 
       <h4>The sensory difference you'll notice first</h4>
       <ul>
-        <li>The flour smells like grain — slightly nutty, slightly grassy. This is the germ oil. If your atta has no smell, the germ has been removed.</li>
+        <li>The flour smells like grain: slightly nutty, slightly grassy. This is the germ oil. If your atta has no smell, the germ has been removed.</li>
         <li>The dough absorbs more water. Intact bran fibre is highly hygroscopic. Expect to add slightly more water when kneading — this is a good sign.</li>
         <li>The roti will be slightly coarser in texture and darker in colour. This is the bran. Some households need a week to adjust; most prefer it within a month.</li>
-        <li>The shelf life is shorter — 60 days from milling, not six months. The germ oils that make the flour nutritious also make it perishable. This is a feature, not a flaw.</li>
+        <li>The shelf life is shorter, 60 days from milling, not six months. The germ oils that make the flour nutritious also make it perishable. This is a feature, not a flaw.</li>
       </ul>
 
       <h3>What this means for your family</h3>
