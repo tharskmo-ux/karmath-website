@@ -639,69 +639,53 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
   overflow: hidden;
 }
 .product-visual {
-  background: linear-gradient(150deg, var(--rose-pale) 0%, var(--rose-blush) 100%);
-  padding: 60px 40px;
+  background: linear-gradient(150deg, #EDE4D8 0%, #E4D5C0 50%, #D8C8AE 100%);
+  padding: 48px 32px 36px;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 28px; position: relative; overflow: hidden;
+  gap: 0; position: relative; overflow: hidden;
 }
-.product-visual::before {
-  content: 'नवसत्व';
-  position: absolute; bottom: -20px; right: -10px;
-  font-family: var(--font-deva);
-  font-size: 9rem; font-weight: 700;
-  color: rgba(160,104,96,0.07);
-  line-height: 1; pointer-events: none;
+/* Subtle linen texture overlay */
+.product-visual::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23C8A878' opacity='0.06'/%3E%3Cline x1='0' y1='0' x2='4' y2='4' stroke='%23A08050' stroke-width='0.3' opacity='0.07'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+.product-bag-wrap {
+  position: relative; z-index: 2;
+  filter: drop-shadow(0 24px 40px rgba(60,40,20,0.28)) drop-shadow(0 6px 12px rgba(60,40,20,0.18));
+  transform: perspective(900px) rotateY(-4deg) rotateX(1deg);
+  transition: transform 0.5s ease, filter 0.5s ease;
+  animation: bagFloat 5s ease-in-out infinite;
+}
+.product-bag-wrap:hover {
+  transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(1.03);
+  filter: drop-shadow(0 32px 52px rgba(60,40,20,0.32)) drop-shadow(0 8px 16px rgba(60,40,20,0.2));
+}
+@keyframes bagFloat {
+  0%, 100% { transform: perspective(900px) rotateY(-4deg) rotateX(1deg) translateY(0); }
+  50%       { transform: perspective(900px) rotateY(-4deg) rotateX(1deg) translateY(-8px); }
 }
 .product-badge {
-  position: absolute; top: 20px; left: 20px;
+  position: absolute; top: 18px; left: 18px; z-index: 5;
   font-family: var(--font-ui);
   font-size: 0.55rem; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--sage);
-  background: rgba(212,224,196,0.7);
+  background: rgba(212,224,196,0.85);
+  backdrop-filter: blur(4px);
   padding: 5px 12px; border-radius: 20px;
   display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 8px rgba(60,90,40,0.15);
 }
 .product-badge-dot {
   width:6px; height:6px; border-radius:50%; background:var(--sage);
   animation: pulse 2s ease-in-out infinite;
 }
-.product-pack-label {
-  text-align: center; z-index: 2;
-}
-.product-pack-name {
-  font-family: var(--font-display);
-  font-size: 2rem; font-weight: 600;
-  color: var(--soil); letter-spacing: 0.06em;
-}
-.product-pack-deva {
-  font-family: var(--font-deva);
-  font-size: 0.95rem; color: var(--rose);
-  display: block; margin-top: 3px;
-}
-.product-pack-sub {
-  font-family: var(--font-ui);
-  font-size: 0.55rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--sage); display: block; margin-top: 8px;
-}
-
-/* Grain tags in product */
-.grain-tags {
-  display: flex; flex-wrap: wrap; gap: 5px;
-  justify-content: center; z-index: 2;
-  max-width: 280px;
-}
-.grain-tag {
-  font-family: var(--font-ui);
-  font-size: 0.52rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--earth);
-  background: rgba(250,246,240,0.85);
-  border: 1px solid rgba(160,104,96,0.2);
-  padding: 4px 10px; border-radius: 20px;
-}
+/* hide old pack label & grain tags — bag SVG replaces them */
+.product-pack-label { display: none; }
+.grain-tags         { display: none; }
 
 /* Product info panel */
 .product-info {
@@ -1830,21 +1814,228 @@ footer {
           <span class="product-badge-dot"></span>
           Available Now
         </div>
-        <div class="product-pack-label">
-          <div class="product-pack-name">Navsatva</div>
-          <span class="product-pack-deva">नवसत्व</span>
-          <span class="product-pack-sub">9-Grain Multi Millet Atta</span>
-        </div>
-        <div class="grain-tags">
-          <span class="grain-tag">Jowar</span>
-          <span class="grain-tag">Bajra</span>
-          <span class="grain-tag">Ragi</span>
-          <span class="grain-tag">Wheat</span>
-          <span class="grain-tag">Black Wheat</span>
-          <span class="grain-tag">Chana</span>
-          <span class="grain-tag">Moong</span>
-          <span class="grain-tag">Arhar</span>
-          <span class="grain-tag">Moth</span>
+        <div class="product-bag-wrap">
+          <!-- Karmath × Navsatva Bag Mockup — Inline SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 460" width="300" height="406" role="img" aria-label="Navsatva 5kg flour bag by Karmath">
+            <defs>
+              <linearGradient id="pv-bagBody" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#C4A47C"/>
+                <stop offset="7%"   stop-color="#DEC49A"/>
+                <stop offset="45%"  stop-color="#F2E4CC"/>
+                <stop offset="88%"  stop-color="#E0C89A"/>
+                <stop offset="100%" stop-color="#BA9060"/>
+              </linearGradient>
+              <linearGradient id="pv-sage" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#5C7048"/>
+                <stop offset="100%" stop-color="#38501E"/>
+              </linearGradient>
+              <linearGradient id="pv-topFold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#A88050"/>
+                <stop offset="100%" stop-color="#CFA870"/>
+              </linearGradient>
+              <linearGradient id="pv-lShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#000000" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="pv-rShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#000000" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0.26"/>
+              </linearGradient>
+              <radialGradient id="pv-shine" cx="38%" cy="28%" r="52%">
+                <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.09"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </radialGradient>
+              <clipPath id="pv-bagClip">
+                <path d="M32,44 Q32,30 46,28 L294,28 Q308,28 308,44 L308,412 Q308,426 294,428 L46,428 Q32,426 32,412 Z"/>
+              </clipPath>
+            </defs>
+
+            <!-- Floor shadow -->
+            <ellipse cx="170" cy="444" rx="118" ry="11" fill="#3A2810" opacity="0.22"/>
+
+            <!-- Bag body -->
+            <path d="M32,44 Q32,30 46,28 L294,28 Q308,28 308,44 L308,412 Q308,426 294,428 L46,428 Q32,426 32,412 Z"
+                  fill="url(#pv-bagBody)"/>
+
+            <!-- Side shadows for depth -->
+            <rect x="32" y="28" width="34" height="400" fill="url(#pv-lShadow)" clip-path="url(#pv-bagClip)"/>
+            <rect x="274" y="28" width="34" height="400" fill="url(#pv-rShadow)" clip-path="url(#pv-bagClip)"/>
+
+            <!-- Subtle shine -->
+            <path d="M32,44 Q32,30 46,28 L294,28 Q308,28 308,44 L308,412 Q308,426 294,428 L46,428 Q32,426 32,412 Z"
+                  fill="url(#pv-shine)"/>
+
+            <!-- Top heat-seal fold -->
+            <path d="M46,28 L294,28 L294,62 Q170,72 46,62 Z" fill="url(#pv-topFold)" opacity="0.85"/>
+            <line x1="50" y1="46" x2="290" y2="46" stroke="#8A6030" stroke-width="0.9" stroke-dasharray="4,3" opacity="0.55"/>
+            <line x1="50" y1="53" x2="290" y2="53" stroke="#8A6030" stroke-width="0.4" stroke-dasharray="4,3" opacity="0.35"/>
+
+            <!-- ══ SAGE LABEL PANEL ══ -->
+            <rect x="48" y="68" width="244" height="326" rx="3" fill="url(#pv-sage)"/>
+
+            <!-- Texture lines on sage -->
+            <g opacity="0.05" stroke="#FFFFFF" stroke-width="0.5">
+              <line x1="48" y1="85"  x2="292" y2="85"/><line x1="48" y1="102" x2="292" y2="102"/>
+              <line x1="48" y1="119" x2="292" y2="119"/><line x1="48" y1="136" x2="292" y2="136"/>
+              <line x1="48" y1="153" x2="292" y2="153"/><line x1="48" y1="170" x2="292" y2="170"/>
+              <line x1="48" y1="187" x2="292" y2="187"/><line x1="48" y1="204" x2="292" y2="204"/>
+              <line x1="48" y1="221" x2="292" y2="221"/><line x1="48" y1="238" x2="292" y2="238"/>
+              <line x1="48" y1="255" x2="292" y2="255"/><line x1="48" y1="272" x2="292" y2="272"/>
+              <line x1="48" y1="289" x2="292" y2="289"/><line x1="48" y1="306" x2="292" y2="306"/>
+              <line x1="48" y1="323" x2="292" y2="323"/><line x1="48" y1="340" x2="292" y2="340"/>
+              <line x1="48" y1="357" x2="292" y2="357"/><line x1="48" y1="374" x2="292" y2="374"/>
+            </g>
+
+            <!-- Decorative borders -->
+            <rect x="53" y="73"  width="234" height="316" rx="2" fill="none" stroke="#C8897E" stroke-width="1.1"/>
+            <rect x="57" y="77"  width="226" height="308" rx="1" fill="none" stroke="#C8897E" stroke-width="0.35" opacity="0.5"/>
+
+            <!-- ── BRAND NAME ── -->
+            <text x="170" y="101" text-anchor="middle"
+                  font-family="Georgia,'Times New Roman',serif" font-size="11"
+                  font-weight="bold" fill="#FAF0ED" letter-spacing="7">KARMATH</text>
+            <text x="170" y="116" text-anchor="middle"
+                  font-family="Georgia,'Times New Roman',serif" font-size="7.5"
+                  fill="#C8897E" letter-spacing="3">कर्मठ</text>
+
+            <!-- Top ornament line + diamond -->
+            <line x1="66"  y1="124" x2="150" y2="124" stroke="#C8897E" stroke-width="0.65"/>
+            <polygon points="170,120 174,124 170,128 166,124" fill="#C8897E"/>
+            <line x1="190" y1="124" x2="274" y2="124" stroke="#C8897E" stroke-width="0.65"/>
+
+            <!-- ── PRODUCT CATEGORY ── -->
+            <text x="170" y="140" text-anchor="middle"
+                  font-family="Arial,sans-serif" font-size="6.5"
+                  fill="#FAF0ED" letter-spacing="3.5" opacity="0.7">9-GRAIN MULTI MILLET ATTA</text>
+
+            <!-- ── HERO NAME: Navsatva ── -->
+            <text x="170" y="183" text-anchor="middle"
+                  font-family="Georgia,'Times New Roman',serif" font-size="38"
+                  font-weight="bold" font-style="italic" fill="#FAF0ED">Navsatva</text>
+
+            <!-- Devanagari -->
+            <text x="170" y="201" text-anchor="middle"
+                  font-family="Georgia,'Times New Roman',serif" font-size="12"
+                  fill="#C8897E" letter-spacing="2">नवसत्व</text>
+
+            <!-- Meaning -->
+            <text x="170" y="215" text-anchor="middle"
+                  font-family="Georgia,'Times New Roman',serif" font-size="6.5"
+                  font-style="italic" fill="#FAF0ED" opacity="0.6">'Nine Essences' — pure, unadulterated vitality</text>
+
+            <!-- Middle ornament -->
+            <line x1="66"  y1="223" x2="150" y2="223" stroke="#C8897E" stroke-width="0.65"/>
+            <polygon points="170,219 174,223 170,227 166,223" fill="#C8897E"/>
+            <line x1="190" y1="223" x2="274" y2="223" stroke="#C8897E" stroke-width="0.65"/>
+
+            <!-- ── 9 GRAINS ── -->
+            <text x="170" y="237" text-anchor="middle"
+                  font-family="Arial,sans-serif" font-size="6"
+                  fill="#FAF0ED" letter-spacing="3" opacity="0.75">ORGANICALLY GROWN</text>
+
+            <!-- Grain pills — 3 rows of 3 -->
+            <g font-family="Arial,sans-serif" font-size="6.2" font-weight="bold">
+              <!-- Row 1 -->
+              <rect x="58"  y="242" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.15"/>
+              <rect x="58"  y="242" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="87"  y="254" text-anchor="middle" fill="#FAF0ED">Jowar</text>
+
+              <rect x="121" y="242" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.15"/>
+              <rect x="121" y="242" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="150" y="254" text-anchor="middle" fill="#FAF0ED">Bajra</text>
+
+              <rect x="184" y="242" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.15"/>
+              <rect x="184" y="242" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="213" y="254" text-anchor="middle" fill="#FAF0ED">Ragi</text>
+
+              <!-- Row 2 -->
+              <rect x="58"  y="264" width="58" height="17" rx="8.5" fill="#C8897E" opacity="0.28"/>
+              <rect x="58"  y="264" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="87"  y="276" text-anchor="middle" fill="#FAF0ED">Wheat</text>
+
+              <rect x="121" y="264" width="74" height="17" rx="8.5" fill="#C8897E" opacity="0.28"/>
+              <rect x="121" y="264" width="74" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="158" y="276" text-anchor="middle" fill="#FAF0ED">Black Wheat</text>
+
+              <rect x="200" y="264" width="54" height="17" rx="8.5" fill="#C8897E" opacity="0.28"/>
+              <rect x="200" y="264" width="54" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="227" y="276" text-anchor="middle" fill="#FAF0ED">Chana</text>
+
+              <!-- Row 3 -->
+              <rect x="58"  y="286" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.10"/>
+              <rect x="58"  y="286" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="87"  y="298" text-anchor="middle" fill="#FAF0ED">Moong</text>
+
+              <rect x="121" y="286" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.10"/>
+              <rect x="121" y="286" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="150" y="298" text-anchor="middle" fill="#FAF0ED">Arhar</text>
+
+              <rect x="184" y="286" width="58" height="17" rx="8.5" fill="#FAF0ED" opacity="0.10"/>
+              <rect x="184" y="286" width="58" height="17" rx="8.5" fill="none" stroke="#C8897E" stroke-width="0.55"/>
+              <text x="213" y="298" text-anchor="middle" fill="#FAF0ED">Moth</text>
+            </g>
+
+            <!-- Bottom ornament -->
+            <line x1="66"  y1="310" x2="150" y2="310" stroke="#C8897E" stroke-width="0.65"/>
+            <polygon points="170,306 174,310 170,314 166,310" fill="#C8897E"/>
+            <line x1="190" y1="310" x2="274" y2="310" stroke="#C8897E" stroke-width="0.65"/>
+
+            <!-- ── KEY CLAIMS ── -->
+            <g font-family="Arial,sans-serif" font-size="5.8" fill="#FAF0ED" opacity="0.8" text-anchor="middle">
+              <text x="96"  y="323">COLD PRESSED</text>
+              <text x="170" y="323">STONE GROUND</text>
+              <text x="244" y="323">NO ADDITIVES</text>
+              <circle cx="133" cy="320" r="1.4" fill="#C8897E"/>
+              <circle cx="207" cy="320" r="1.4" fill="#C8897E"/>
+            </g>
+
+            <!-- ── CERTIFICATION STAMP (bottom right) ── -->
+            <g transform="translate(248,355)">
+              <circle cx="0" cy="0" r="32" fill="#FAF0ED" opacity="0.05"/>
+              <circle cx="0" cy="0" r="32" fill="none" stroke="#FAF0ED" stroke-width="0.5" stroke-dasharray="2.5,2.5" opacity="0.45"/>
+              <circle cx="0" cy="0" r="27" fill="none" stroke="#FAF0ED" stroke-width="0.9" opacity="0.6"/>
+              <circle cx="0" cy="0" r="17" fill="none" stroke="#FAF0ED" stroke-width="0.4" opacity="0.4"/>
+              <text x="0" y="7" text-anchor="middle"
+                    font-family="Georgia,serif" font-size="15"
+                    font-weight="bold" fill="#FAF0ED" opacity="0.85">क</text>
+              <defs>
+                <path id="pv-topArc" d="M -24,-7 A 25,25 0 0,1 24,-7"/>
+                <path id="pv-botArc" d="M -22,10 A 25,25 0 0,0 22,10"/>
+              </defs>
+              <text font-family="Arial,sans-serif" font-size="4.8" font-weight="bold" fill="#FAF0ED" opacity="0.75">
+                <textPath href="#pv-topArc">ORGANICALLY GROWN</textPath>
+              </text>
+              <text font-family="Arial,sans-serif" font-size="4.8" font-weight="bold" fill="#FAF0ED" opacity="0.75">
+                <textPath href="#pv-botArc" startOffset="10%">KARMATH CERTIFIED</textPath>
+              </text>
+            </g>
+
+            <!-- ── FOOTER STRIP ── -->
+            <rect x="48" y="368" width="244" height="26" fill="#000000" opacity="0.28"/>
+            <text x="68"  y="384" font-family="Georgia,serif" font-size="13"
+                  font-weight="bold" fill="#FAF0ED">5 kg</text>
+            <text x="68"  y="392" font-family="Arial,sans-serif" font-size="5.5"
+                  fill="#FAF0ED" opacity="0.55">Net Weight</text>
+            <text x="170" y="383" text-anchor="middle" font-family="Arial,sans-serif"
+                  font-size="5.5" fill="#FAF0ED" opacity="0.6">Chhindwara · Sehore · Hoshangabad, MP</text>
+            <text x="170" y="391" text-anchor="middle" font-family="Arial,sans-serif"
+                  font-size="5" fill="#FAF0ED" opacity="0.45">Cold pressed · Stone ground · No additives</text>
+
+            <!-- Tagline above footer -->
+            <text x="170" y="364" text-anchor="middle"
+                  font-family="Georgia,serif" font-size="6"
+                  font-style="italic" fill="#FAF0ED" opacity="0.5">The farmer's effort. Your family's nourishment.</text>
+
+            <!-- Bottom bag fold -->
+            <path d="M46,428 L294,428 L294,412 Q170,404 46,412 Z" fill="#B08048" opacity="0.45"/>
+            <line x1="50" y1="416" x2="290" y2="416" stroke="#8A6030" stroke-width="0.7" stroke-dasharray="4,3" opacity="0.45"/>
+
+            <!-- Side gusset creases -->
+            <line x1="32" y1="64"  x2="48" y2="72"  stroke="#A07840" stroke-width="0.5" opacity="0.5"/>
+            <line x1="32" y1="404" x2="48" y2="396" stroke="#A07840" stroke-width="0.5" opacity="0.5"/>
+            <line x1="308" y1="64"  x2="292" y2="72"  stroke="#886030" stroke-width="0.5" opacity="0.5"/>
+            <line x1="308" y1="404" x2="292" y2="396" stroke="#886030" stroke-width="0.5" opacity="0.5"/>
+          </svg>
         </div>
       </div>
       <div class="product-info">
@@ -1913,6 +2104,9 @@ footer {
             <span class="order-total-value" id="order-total">₹699</span>
             <span class="order-total-note">Subject to stock confirmation</span>
           </div>
+          <p style="font-family:var(--font-ui);font-size:0.6rem;color:var(--terra);opacity:0.7;margin-top:-8px;">
+            + Delivery charges applicable on all orders
+          </p>
 
           <!-- Row 4: WA button -->
           <a href="https://wa.me/919359781023?text=Hi%2C%20I%20want%20to%20order%20Navsatva%205kg%20x%201%20bag%20%3D%20%E2%82%B9699" class="btn-wa" id="wa-order-btn">
@@ -2275,6 +2469,9 @@ footer {
           <span class="delivery-tag">Nagpur</span>
           <span class="delivery-tag">Pan-India 10kg+</span>
         </div>
+        <p style="font-family:var(--font-ui);font-size:0.6rem;color:var(--terra);opacity:0.65;margin-top:10px;line-height:1.6;">
+          Delivery charges applicable on all orders.
+        </p>
       </div>
     </div>
   </div>
@@ -2312,14 +2509,14 @@ footer {
       <div>
         <div class="footer-col-title">Contact</div>
         <ul class="footer-links">
-          <li><a href="https://wa.me/919359781023" target="_blank" rel="noopener">WhatsApp: +91 93597 81023</a></li>
+          <li><a href="https://wa.me/919359781023" target="_blank" rel="noopener">WhatsApp Us</a></li>
           <li><a href="#order" onclick="scrollTo('order')">How to Order</a></li>
           <li><a href="#knowledge" onclick="scrollTo('knowledge')">Knowledge Blog</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Karmath · कर्मठ · Enalsys · All rights reserved</span>
+      <span class="footer-copy">© 2026 Karmath · कर्मठ · All rights reserved</span>
       <span class="footer-copy">Organically grown · MP Farms · Cold Pressed · Stone Ground</span>
     </div>
   </div>
