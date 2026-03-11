@@ -644,13 +644,13 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
 .founder-placeholder-bg { position: absolute; inset: 0; }
 
 .founder-card:nth-child(1) .founder-placeholder-bg {
-  background: linear-gradient(155deg, #2E4A1E 0%, #1A2C10 100%);
+  background: linear-gradient(155deg, #263820 0%, #141E0C 100%);
 }
 .founder-card:nth-child(2) .founder-placeholder-bg {
   background: linear-gradient(155deg, #4A2828 0%, #2C1616 100%);
 }
 .founder-card:nth-child(3) .founder-placeholder-bg {
-  background: linear-gradient(155deg, #263820 0%, #141E0C 100%);
+  background: linear-gradient(155deg, #2E4A1E 0%, #1A2C10 100%);
 }
 
 .founder-initial-large {
@@ -742,32 +742,6 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
   pointer-events: none;
 }
 
-@media (max-width: 900px) {
-  #founders .inner { padding-top: 60px; padding-bottom: 40px; }
-  .founders-grid { grid-template-columns: 1fr 1fr; }
-  .founder-card:last-child { grid-column: span 2; aspect-ratio: 16/8; }
-  .founder-bio { max-height: 160px; opacity: 1; transform: none; margin-top: 12px; }
-}
-@media (max-width: 600px) {
-  #founders .inner { padding-top: 48px; padding-bottom: 32px; }
-  .founders-grid { grid-template-columns: 1fr; }
-  .founder-card { aspect-ratio: 5/4; }
-  .founder-card:last-child { grid-column: span 1; }
-  .founder-bio { max-height: 180px; opacity: 1; transform: none; margin-top: 10px; font-size: 0.78rem; }
-  .founder-name { font-size: 1.5rem !important; }
-  .founder-number { font-size: 0.52rem; }
-  .founder-role { font-size: 0.52rem; }
-  .founder-content { padding: 24px 22px 28px; }
-  .founder-overlay {
-    background: linear-gradient(
-      to top,
-      rgba(10,10,8,1) 0%,
-      rgba(10,10,8,0.88) 40%,
-      rgba(10,10,8,0.3) 65%,
-      transparent 100%
-    );
-  }
-}
 
 .farmer-card {
   background: var(--warm-white);
@@ -1535,41 +1509,198 @@ footer {
 }
 
 /* ══════════════════════════════════════════
-   RESPONSIVE
+   MOBILE NAV DRAWER
 ══════════════════════════════════════════ */
-@media(max-width: 1100px) {
-  :root { --section-pad: 90px 52px; }
-  #hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 80px 52px 60px; min-height: 60vh; }
-  .hero-right { padding: 64px 52px; min-height: 70vh; }
-  .manifesto-body { grid-template-columns: 1fr; gap: 48px; }
-  .story-layout { grid-template-columns: 1fr; }
-  .story-aside { position: static; }
-  .farmers-grid { grid-template-columns: 1fr 1fr; }
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column; justify-content: center;
+  gap: 5px; width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer;
+  padding: 4px; flex-shrink: 0;
+}
+.nav-mobile-toggle span {
+  display: block; width: 22px; height: 2px;
+  background: var(--soil); border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+.nav-mobile-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-mobile-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-mobile-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-nav-drawer {
+  display: none;
+  position: fixed; top: 70px; left: 0; right: 0;
+  background: var(--warm-white);
+  z-index: 199; padding: 24px 24px 32px;
+  border-bottom: 1px solid rgba(92,112,72,0.12);
+  box-shadow: 0 12px 40px rgba(30,20,10,0.12);
+  transform: translateY(-8px); opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+.mobile-nav-drawer.open {
+  display: block;
+  transform: translateY(0); opacity: 1;
+  pointer-events: all;
+}
+.mobile-nav-links {
+  list-style: none; display: flex; flex-direction: column; gap: 0;
+  margin-bottom: 20px;
+}
+.mobile-nav-links li a {
+  display: block; padding: 13px 0;
+  font-family: var(--font-ui);
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--earth); text-decoration: none;
+  border-bottom: 1px solid rgba(92,112,72,0.08);
+  transition: color 0.2s;
+}
+.mobile-nav-links li:last-child a { border-bottom: none; }
+.mobile-nav-links li a:hover { color: var(--sage); }
+.mobile-nav-cta {
+  display: block; text-align: center;
+  margin-top: 8px; padding: 13px 24px !important;
+  width: 100%; box-sizing: border-box;
+}
+.mobile-nav-backdrop {
+  display: none;
+  position: fixed; inset: 0; top: 70px;
+  background: rgba(20,14,8,0.35);
+  z-index: 198;
+}
+.mobile-nav-backdrop.open { display: block; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — 4 BREAKPOINTS
+   1200px: large tablet / small desktop
+   1024px: iPad landscape
+    900px: iPad portrait
+    700px: large phone
+    480px: phone portrait
+══════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  :root { --section-pad: 90px 60px; }
+  footer { padding: 72px 60px 40px; }
+  .hero-left { padding: 80px 60px; }
+  .hero-right { padding: 80px 52px; }
+  .featured-product { grid-template-columns: 360px 1fr; }
+  .footer-top { grid-template-columns: 240px 1fr 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 1024px) {
+  :root { --section-pad: 80px 48px; }
+  footer { padding: 64px 48px 40px; }
+  nav { padding: 0 48px; }
+  .hero-left { padding: 72px 48px; }
+  .hero-right { padding: 72px 48px; }
   .featured-product { grid-template-columns: 1fr; }
+  .product-showcase { max-width: 480px; margin: 0 auto; }
+  .story-layout { grid-template-columns: 1fr; }
+  .story-aside { position: static; max-width: 480px; }
+  .manifesto-body { grid-template-columns: 1fr; gap: 48px; }
+  .order-layout { grid-template-columns: 1fr; }
+  .order-contact { position: static; }
   .coming-grid { grid-template-columns: 1fr 1fr; }
   .brand-philosophy-grid { grid-template-columns: 1fr 1fr; }
   .benefits-grid { grid-template-columns: 1fr 1fr; }
   .knowledge-grid { grid-template-columns: 1fr 1fr; }
-  .order-layout { grid-template-columns: 1fr; }
-  .order-contact { position: static; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
-@media(max-width: 700px) {
-  :root { --section-pad: 70px 24px; }
-  nav { padding: 0 24px; }
+
+@media (max-width: 900px) {
+  :root { --section-pad: 72px 40px; }
+  nav { padding: 0 40px; }
+  footer { padding: 56px 40px 36px; }
+  #hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 80px 40px 64px; min-height: 55vh; }
+  .hero-right { padding: 64px 40px; min-height: auto; }
+  .founders-grid { grid-template-columns: 1fr 1fr; }
+  .founder-card:last-child { grid-column: span 2; aspect-ratio: 16/7; }
+  .founder-bio { max-height: 160px; opacity: 1; transform: none; margin-top: 12px; }
+  .farmers-grid { grid-template-columns: 1fr 1fr; }
+  .orbit-wrap { width: 220px; height: 220px; }
+  .order-panel { padding: 36px 32px; }
+}
+
+@media (max-width: 700px) {
+  :root { --section-pad: 64px 24px; }
+  nav { padding: 0 20px; height: 60px; }
+  .mobile-nav-drawer { top: 60px; }
+  .mobile-nav-backdrop { top: 60px; }
+  .nav-cta-desktop { display: none; }
   .nav-links { display: none; }
-  .nav-mobile-toggle { display: block; }
-  .hero-left, .hero-right { padding: 60px 24px; }
+  .nav-mobile-toggle { display: flex; }
+  footer { padding: 48px 24px 32px; }
+
+  .hero-left { padding: 64px 24px 52px; min-height: 50vh; }
+  .hero-right { padding: 52px 24px 56px; }
+  .hero-brand-name { font-size: clamp(2.8rem, 12vw, 4rem); }
+  .hero-tagline { font-size: clamp(1.1rem, 4vw, 1.4rem); }
+  .hero-tagline-deva { margin-bottom: 36px; }
+  .orbit-wrap { width: 200px; height: 200px; }
+
+  .manifesto-body { grid-template-columns: 1fr; gap: 36px; }
   .manifesto-commitments { grid-template-columns: 1fr; }
+
+  .story-stats { grid-template-columns: 1fr 1fr; }
+
+  .founders-grid { grid-template-columns: 1fr; }
+  .founder-card { aspect-ratio: 5/4; }
+  .founder-card:last-child { grid-column: span 1; aspect-ratio: 5/4; }
+  .founder-name { font-size: 1.5rem !important; }
+  .founder-number { font-size: 0.52rem; }
+  .founder-role { font-size: 0.52rem; }
+  .founder-content { padding: 24px 22px 28px; }
+  .founder-bio { max-height: 180px; opacity: 1; transform: none; margin-top: 10px; font-size: 0.78rem; }
+  .founder-overlay {
+    background: linear-gradient(to top,
+      rgba(10,10,8,1) 0%, rgba(10,10,8,0.88) 40%,
+      rgba(10,10,8,0.3) 65%, transparent 100%);
+  }
+
   .farmers-grid { grid-template-columns: 1fr; }
+
+  .product-info { padding: 32px 24px; }
   .coming-grid { grid-template-columns: 1fr; }
+
   .brand-philosophy-grid { grid-template-columns: 1fr; }
   .benefits-grid { grid-template-columns: 1fr; }
+
   .knowledge-grid { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr; }
-  .story-stats { grid-template-columns: 1fr 1fr; }
-  .product-info { padding: 36px 28px; }
+
+  .order-panel { padding: 28px 20px; }
+  .size-btn { padding: 10px 14px; font-size: 0.7rem; }
+  .sub-freq-btn { padding: 8px 12px; font-size: 0.65rem; }
+  .order-total-note { font-size: 0.6rem; max-width: 100%; }
+
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  :root { --section-pad: 56px 18px; }
+  nav { padding: 0 18px; }
+  footer { padding: 44px 18px 28px; }
+
+  .hero-left { padding: 56px 18px 44px; }
+  .hero-right { padding: 44px 18px 48px; }
+  .hero-brand-name { font-size: clamp(2.4rem, 14vw, 3.5rem); letter-spacing: 0.12em; }
+  .orbit-wrap { width: 180px; height: 180px; }
+  .launch-ribbon { font-size: 0.52rem; }
+
+  .order-type-btn { padding: 10px 12px; font-size: 0.65rem; }
+  .qty-controls { gap: 8px; }
+  .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
+  .order-total-value { font-size: 1.8rem; }
+
+  .farmer-card { padding: 28px 18px; }
+  .blog-card { padding: 28px 20px; }
+
+  .story-stats { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-value { font-size: 2.2rem; }
 }
 
 /* ══════════════════════════════════════════════════
@@ -1757,8 +1888,24 @@ footer {
     <li><a href="#knowledge" onclick="scrollTo('knowledge')">Knowledge</a></li>
     <li><a href="#order" onclick="scrollTo('order')">Order</a></li>
   </ul>
-  <a href="https://wa.me/919359781023" class="nav-cta">Order on WhatsApp</a>
+  <a href="https://wa.me/919359781023" class="nav-cta nav-cta-desktop">Order on WhatsApp</a>
+  <button class="nav-mobile-toggle" id="nav-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<!-- Mobile drawer -->
+<div class="mobile-nav-drawer" id="mobile-drawer">
+  <ul class="mobile-nav-links">
+    <li><a href="#manifesto" onclick="scrollTo('manifesto');closeMobileMenu()">Our Belief</a></li>
+    <li><a href="#story" onclick="scrollTo('story');closeMobileMenu()">Our Story</a></li>
+    <li><a href="#products" onclick="scrollTo('products');closeMobileMenu()">Products</a></li>
+    <li><a href="#why" onclick="scrollTo('why');closeMobileMenu()">Why It Works</a></li>
+    <li><a href="#knowledge" onclick="scrollTo('knowledge');closeMobileMenu()">Knowledge</a></li>
+    <li><a href="#order" onclick="scrollTo('order');closeMobileMenu()">Order</a></li>
+  </ul>
+  <a href="https://wa.me/919359781023" class="nav-cta mobile-nav-cta">Order on WhatsApp</a>
+</div>
+<div class="mobile-nav-backdrop" id="mobile-backdrop" onclick="closeMobileMenu()"></div>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
@@ -1969,9 +2116,9 @@ footer {
 
   <div class="founders-grid">
 
-    <!-- Harshad -->
+    <!-- Himanshu -->
     <div class="founder-card fade-up">
-      <!-- <img class="founder-photo" src="harshad.jpg" alt="Harshad"> -->
+      <!-- <img class="founder-photo" src="himanshu.jpg" alt="Himanshu"> -->
       <div class="founder-placeholder">
         <div class="founder-placeholder-bg"></div>
         <div class="founder-initial-large">H</div>
@@ -1980,9 +2127,9 @@ footer {
       <span class="founder-photo-hint">Photo coming soon</span>
       <div class="founder-content">
         <span class="founder-number">01 / Co-Founder</span>
-        <div class="founder-name">Harshad</div>
-        <span class="founder-role">Strategy & Operations</span>
-        <p class="founder-bio">Over a decade in management consulting, working with companies across banking, automotive, and manufacturing. The instinct was always the same: trace the problem to its root before proposing a solution. At Karmath, nothing is different. If a sourcing decision, a process step, or a claim on the label doesn't hold up to scrutiny, it doesn't go out.</p>
+        <div class="founder-name">Himanshu</div>
+        <span class="founder-role">Farmer Relations & Organic Sourcing</span>
+        <p class="founder-bio">Years on the ground in rural Madhya Pradesh, not on farm visits but in the kind of long-term relationships where a farmer tells you which season was hard and why. Himanshu knows which soil gives what, which farmer has been organic for how long, and why that matters by the time the grain reaches the mill. He is the reason we can say what we say on the label.</p>
       </div>
     </div>
 
@@ -2003,9 +2150,9 @@ footer {
       </div>
     </div>
 
-    <!-- Himanshu -->
+    <!-- Harshad -->
     <div class="founder-card fade-up">
-      <!-- <img class="founder-photo" src="himanshu.jpg" alt="Himanshu"> -->
+      <!-- <img class="founder-photo" src="harshad.jpg" alt="Harshad"> -->
       <div class="founder-placeholder">
         <div class="founder-placeholder-bg"></div>
         <div class="founder-initial-large">H</div>
@@ -2014,9 +2161,9 @@ footer {
       <span class="founder-photo-hint">Photo coming soon</span>
       <div class="founder-content">
         <span class="founder-number">03 / Co-Founder</span>
-        <div class="founder-name">Himanshu</div>
-        <span class="founder-role">Farmer Relations & Organic Sourcing</span>
-        <p class="founder-bio">Years on the ground in rural Madhya Pradesh, not on farm visits but in the kind of long-term relationships where a farmer tells you which season was hard and why. Himanshu knows which soil gives what, which farmer has been organic for how long, and why that matters by the time the grain reaches the mill. He is the reason we can say what we say on the label.</p>
+        <div class="founder-name">Harshad</div>
+        <span class="founder-role">Strategy & Operations</span>
+        <p class="founder-bio">Over a decade in management consulting, working with companies across banking, automotive, and manufacturing. The instinct was always the same: trace the problem to its root before proposing a solution. At Karmath, nothing is different. If a sourcing decision, a process step, or a claim on the label doesn't hold up to scrutiny, it doesn't go out.</p>
       </div>
     </div>
 
@@ -3078,6 +3225,28 @@ function changeQty(delta) {
   input.value  = newVal;
   updateOrder();
 }
+
+// ── Mobile nav ────────────────────────────
+function toggleMobileMenu() {
+  const toggle  = document.getElementById('nav-toggle');
+  const drawer  = document.getElementById('mobile-drawer');
+  const backdrop = document.getElementById('mobile-backdrop');
+  const isOpen  = drawer.classList.contains('open');
+  toggle.classList.toggle('open', !isOpen);
+  drawer.classList.toggle('open', !isOpen);
+  backdrop.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+function closeMobileMenu() {
+  document.getElementById('nav-toggle').classList.remove('open');
+  document.getElementById('mobile-drawer').classList.remove('open');
+  document.getElementById('mobile-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close on resize to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 700) closeMobileMenu();
+});
 
 // Init
 updateOrder();
