@@ -692,7 +692,7 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
 
 .founder-name {
   font-family: Georgia, serif;
-  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-size: clamp(1.5rem, 2vw, 1.75rem);
   font-weight: 600; color: #FAF6F0;
   letter-spacing: 0.01em; line-height: 1.1;
   margin-bottom: 6px;
@@ -751,9 +751,22 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(44,26,14,0.08); }
 @media (max-width: 600px) {
   #founders .inner { padding-top: 48px; padding-bottom: 32px; }
   .founders-grid { grid-template-columns: 1fr; }
-  .founder-card { aspect-ratio: 4/3; }
+  .founder-card { aspect-ratio: 5/4; }
   .founder-card:last-child { grid-column: span 1; }
-  .founder-bio { max-height: 140px; opacity: 1; transform: none; margin-top: 10px; }
+  .founder-bio { max-height: 180px; opacity: 1; transform: none; margin-top: 10px; font-size: 0.78rem; }
+  .founder-name { font-size: 1.5rem !important; }
+  .founder-number { font-size: 0.52rem; }
+  .founder-role { font-size: 0.52rem; }
+  .founder-content { padding: 24px 22px 28px; }
+  .founder-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(10,10,8,1) 0%,
+      rgba(10,10,8,0.88) 40%,
+      rgba(10,10,8,0.3) 65%,
+      transparent 100%
+    );
+  }
 }
 
 .farmer-card {
